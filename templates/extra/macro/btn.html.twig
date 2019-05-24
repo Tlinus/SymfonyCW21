@@ -1,0 +1,47 @@
+{% macro list_action(role, link, color, title, text) %}
+    {% import _self as btn %}
+
+    {% set link  = link|default("#") %}
+    {% set class = "btn btn-" ~ color|default("primary") ~ " btn-sm" %}
+    {% set title = title|default("") %}
+    {% set text  = text|default(title) %}
+
+    {% if (is_bool(role) and role == true) or (role == null) or (role != null and is_array(role) == false and is_granted(role))  or (role != null and is_array(role) == true and is_granted(role[0], role[1])) %}
+        {{ btn.list_action_enable(link, class, title, text) }}
+    {% else %}
+        {{ btn.list_action_disable(class, title, text) }}
+    {% endif %}
+
+{% endmacro %}
+
+
+{% macro list_action_enable(link, class, title, text) %}
+    {% apply spaceless %}
+        <a href="{{- link -}}" class="{{- class -}}" title="{{- title -}}">
+            {{- text -}}
+        </a>
+    {% endapply %}
+{% endmacro %}
+
+{% macro list_action_disable(class, title, text) %}
+    {% apply spaceless %}
+        <button class="{{- class -}}" disabled title="{{- title -}}">
+            {{- text -}}
+        </button>
+    {% endapply %}
+{% endmacro %}
+
+
+
+{% macro standard(link, color, title, text) %}
+    {% set link  = link|default("#") %}
+    {% set class = "btn btn-" ~ color|default("primary") %}
+    {% set title = title|default("") %}
+    {% set text  = text|default(title) %}
+
+    {% apply spaceless %}
+        <a href="{{- link -}}" class="{{- class -}}" title="{{- title -}}">
+            {{- text -}}
+        </a>
+    {% endapply %}
+{% endmacro %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Album{% endblock %}
+
+{% block body %}
+    <h1>Album</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ album.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ album.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ album.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ album.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

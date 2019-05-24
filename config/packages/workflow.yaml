@@ -1,0 +1,34 @@
+framework:
+    workflows:
+        validate_album:
+            type: "state_machine"
+
+            marking_store:
+                type: "single_state"
+                arguments: "state"
+
+            supports:
+                - App\Entity\Album
+
+            places:
+                - create
+                - review
+                - publish
+
+            initial_place: create
+
+            transitions:
+                created:
+                    guard: "is_fully_authentificated() and has_role(ROLE_ALBUM_CREATE)"
+                    from: create
+                    to: review
+
+                published:
+                    guard: "is_fully_authentificated() and has_role(ROLE_ADMIN)"
+                    from: review
+                    to: publish
+
+                unpublished:
+                    guard: "is_fully_authentificated() and has_role(ROLE_ADMIN)"
+                    from: publish
+                    to: review

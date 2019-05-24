@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% import 'extra/macro/btn.html.twig' as btn %}
+
+{% block title %}Edit Album{% endblock %}
+
+{% block body %}
+    <h1>Edit Album</h1>
+    {{ include('album/_form.html.twig', {'button_label': 'Update'}) }}
+    {% for transition in workflow_transitions(album) %}
+      {{btn.standard(path("album_state_change", {"id":album.id, "transition": transition.name}), "primary", transition.name ) }}
+    {% endfor %}
+{% endblock %}

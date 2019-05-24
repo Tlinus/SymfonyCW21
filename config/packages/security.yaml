@@ -1,0 +1,74 @@
+security:
+    access_decision_manager:
+        strategy: unanimous
+
+    role_hierarchy:
+        ROLE_ALBUM_READ: ROLE_ALBUM_LIST
+        ROLE_ALBUM_UPDATE: ROLE_ALBUM_READ
+        ROLE_ALBUM_CREATE: ROLE_ALBUM_UPDATE
+        ROLE_ALBUM_DELETE: ROLE_ALBUM_CREATE
+
+        ROLE_CATEGORY_READ: ROLE_CATEGORY_LIST
+        ROLE_CATEGORY_UPDATE: ROLE_CATEGORY_READ
+        ROLE_CATEGORY_CREATE: ROLE_CATEGORY_UPDATE
+        ROLE_CATEGORY_DELETE: ROLE_CATEGORY_CREATE
+
+        ROLE_USER_READ: ROLE_USER_LIST
+        ROLE_USER_UPDATE: ROLE_USER_READ
+        ROLE_USER_CREATE: ROLE_USER_UPDATE
+        ROLE_USER_DELETE: ROLE_USER_CREATE
+
+        ROLE_USER:
+            - ROLE_PROFIL_UPDATE
+            - ROLE_ALBUM_READ
+            - ROLE_CATEGORY_READ
+
+        ROLE_AUTHOR:
+            - ROLE_ALBUM_DELETE
+            - ROLE_CATEGORY_READ
+
+        ROLE_ADMIN:
+            - ROLE_ALBUM_DELETE
+            - ROLE_CATEGORY_DELETE
+            - ROLE_USER_DELETE
+            - ROLE_ALLOWED_TO_SWITCH
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\LoginAuthenticator
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            logout:
+                path: /logout
+                target: home
+
+            switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% import 'extra/macro/btn.html.twig' as btn %}
+
+{% block title %}Album index{% endblock %}
+
+{% block body %}
+    <h1>Album index</h1>
+    {{ btn.standard(path('album_new'), "info", "Add") }}
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for album in albums %}
+            <tr>
+                <td>{{ album.id }}</td>
+                <td>{{ album.name }}</td>
+                <td>{{ album.description }}</td>
+                <td>{{ album.price }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        {{ btn.list_action('ROLE_ALBUM_READ', path('album_show', {'id': album.id}), "primary", "Show") }}
+                        {{ btn.list_action(['ROLE_ALBUM_UPDATE', album], path('album_edit', {'id': album.id}), "success", "Edit") }}
+                        {{ btn.list_action(['ROLE_ALBUM_DELETE', album], path('album_delete', {'id': album.id}), "danger", "Delete") }}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

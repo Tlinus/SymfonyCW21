@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet"href="{{ asset("css/bootstrap.min.css") }}">
+        <link rel="stylesheet"href="{{ asset("css/album.css") }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a href="{{ path("home") }}" class="navbar-brand d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                        <strong>Album</strong>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("home") }}">Home</a>
+                            </li>
+                            {% if app.user is null %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path("app_register") }}">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path("app_login") }}">Login</a>
+                                </li>
+                            {% else %}
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Administration
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ path("category_index") }}">Category</a>
+                                        <a class="dropdown-item" href="{{ path("album_index") }}">Album</a>
+                                        <a class="dropdown-item" href="{{ path("user_index") }}">User</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        User
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ path("user_profil", {"id":app.user.id})}}">Profil</a>
+                                        <a class="dropdown-item" href="{{ path("logout") }}">Logout</a>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main">
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+
+        <footer class="text-muted">
+            <div class="container">
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+                <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+            </div>
+        </footer>
+
+        <script src="{{ asset("js/jquery-slim.min.js")}}" charset="utf-8"></script>
+        <script src="{{ asset("js/popper.min.js")}}" charset="utf-8"></script>
+        <script src="{{ asset("js/bootstrap.min.js")}}" charset="utf-8"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

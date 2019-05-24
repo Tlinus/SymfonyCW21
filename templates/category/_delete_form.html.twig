@@ -1,0 +1,9 @@
+<form method="post" action="{{ path('category_delete', {'id': category.id}) }}">
+    <p>Confirm delete category : "{{ category }}"</p>
+
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+
+    <button class="btn btn-danger">Yes</button>
+    <a class="btn btn-secondary" href="{{ path('category_index') }}">Cancel</a>
+</form>
